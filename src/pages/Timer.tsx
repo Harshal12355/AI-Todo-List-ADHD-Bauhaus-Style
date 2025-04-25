@@ -1,10 +1,9 @@
-
 import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Pause, Timer, Check } from "lucide-react";
+import { Play, Pause, Timer as TimerIcon, Check } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
 
 type TimerMode = "focus" | "short-break" | "long-break";
@@ -13,7 +12,7 @@ const DEFAULT_FOCUS_MINUTES = 25;
 const DEFAULT_SHORT_BREAK_MINUTES = 5;
 const DEFAULT_LONG_BREAK_MINUTES = 15;
 
-const Timer = () => {
+const PomodoroTimer = () => {
   const { toast } = useToast();
   const [mode, setMode] = useState<TimerMode>("focus");
   const [isRunning, setIsRunning] = useState(false);
@@ -29,7 +28,6 @@ const Timer = () => {
   const intervalRef = useRef<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize audio (browser needs user interaction first)
   useEffect(() => {
     audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
     return () => {
@@ -39,7 +37,6 @@ const Timer = () => {
     };
   }, []);
 
-  // Reset timer when mode changes
   useEffect(() => {
     let minutes = focusMinutes;
     if (mode === "short-break") minutes = shortBreakMinutes;
@@ -51,13 +48,11 @@ const Timer = () => {
     intervalRef.current = null;
   }, [mode, focusMinutes, shortBreakMinutes, longBreakMinutes]);
 
-  // Timer logic
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = window.setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
-            // Timer finished
             clearInterval(intervalRef.current || undefined);
             intervalRef.current = null;
             setIsRunning(false);
@@ -68,18 +63,15 @@ const Timer = () => {
               });
             }
             
-            // Show notification
             const nextMode = getNextMode();
             toast({
               title: `${formatModeName(mode)} completed!`,
               description: `Time to ${nextMode === "focus" ? "focus" : "take a break"}!`,
             });
             
-            // Auto transition to next mode
             if (mode === "focus") {
               const newSessions = sessions + 1;
               setSessions(newSessions);
-              // Every 4 sessions, take a long break
               if (newSessions % 4 === 0) {
                 setMode("long-break");
               } else {
@@ -174,10 +166,8 @@ const Timer = () => {
                 <CardContent className="pt-6">
                   <div className="flex flex-col items-center">
                     <div className="relative w-64 h-64 mb-8">
-                      {/* Circular progress background */}
                       <div className="absolute inset-0 rounded-full border-8 border-bauhaus-background"></div>
                       
-                      {/* Circular progress indicator */}
                       <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                         <circle
                           cx="32"
@@ -193,7 +183,6 @@ const Timer = () => {
                         />
                       </svg>
                       
-                      {/* Timer text */}
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className="text-5xl font-bold">{formatTime(timeLeft)}</span>
                       </div>
@@ -252,7 +241,7 @@ const Timer = () => {
               
               <div className="mt-6 text-center">
                 <p className="text-bauhaus-gray">
-                  <Timer className="inline-block mr-2" size={16} />
+                  <TimerIcon className="inline-block mr-2" size={16} />
                   Sessions completed today: <span className="font-bold">{sessions}</span>
                 </p>
               </div>
@@ -332,4 +321,4 @@ const Timer = () => {
   );
 };
 
-export default Timer;
+export default PomodoroTimer;
