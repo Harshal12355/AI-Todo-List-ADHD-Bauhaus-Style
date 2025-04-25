@@ -20,7 +20,7 @@ const Index = () => {
                 <span className="text-bauhaus-blue">Focus</span> your time.
               </h1>
               <p className="bauhaus-subheader mt-6 text-bauhaus-gray">
-                A Bauhaus-inspired task management system designed to improve your productivity and bring clarity to your workflow.
+                An AI task management system designed to improve your productivity and bring clarity to your workflow.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link to="/login">

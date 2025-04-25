@@ -1,11 +1,18 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Sparkles, Settings } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
 import TaskItem, { Task } from "@/components/TaskItem";
+import { breakdownTask, Subtask } from "@/services/api";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Tasks = () => {
   const { toast } = useToast();
@@ -14,6 +21,8 @@ const Tasks = () => {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [isBreakingDown, setIsBreakingDown] = useState(false);
+  const [aiModel, setAiModel] = useState<"ollama" | "openai">("ollama");
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -73,6 +82,63 @@ const Tasks = () => {
     ? Math.round((completedTasksCount / totalTasksCount) * 100) 
     : 0;
 
+  const handleAIBreakdown = async () => {
+    if (!newTaskTitle.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a task title first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsBreakingDown(true);
+    try {
+      const subtasks = await breakdownTask(newTaskTitle, aiModel);
+      const newTask: Task = {
+        id: Date.now().toString(),
+        title: newTaskTitle.trim(),
+        completed: false,
+        subtasks: subtasks.map((subtask) => ({
+          id: Date.now().toString() + Math.random().toString(),
+          title: subtask.title,
+          description: subtask.description,
+          estimated_time: subtask.estimated_time,
+          priority: subtask.priority,
+          completed: false,
+        })),
+      };
+      
+      setTasks([...tasks, newTask]);
+      setNewTaskTitle("");
+      toast({
+        title: "Task added with AI breakdown",
+        description: "Your task has been broken down into manageable subtasks.",
+      });
+    } catch (error) {
+      console.error("Error breaking down task:", error);
+      
+      // Check if it might be an Ollama connection issue
+      if (aiModel === "ollama") {
+        toast({
+          title: "Ollama connection error",
+          description: "Could not connect to Ollama. Make sure Ollama is running and the gemma:1b model is installed, or try using OpenAI instead.",
+          variant: "destructive",
+        });
+        // Suggest switching to OpenAI
+        setAiModel("openai");
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to break down task. Please try again or check your API key configuration.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setIsBreakingDown(false);
+    }
+  };
+
   return (
     <MainLayout>
       <div className="bauhaus-container">
@@ -110,6 +176,28 @@ const Tasks = () => {
             >
               <Plus className="mr-2" size={16} /> Add
             </Button>
+            <div className="flex gap-2">
+              <Select
+                value={aiModel}
+                onValueChange={(value: "ollama" | "openai") => setAiModel(value)}
+              >
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Select model" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ollama">Ollama</SelectItem>
+                  <SelectItem value="openai">OpenAI</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                onClick={handleAIBreakdown}
+                className="bauhaus-btn bauhaus-btn-secondary"
+                disabled={isBreakingDown}
+              >
+                <Sparkles className="mr-2" size={16} />
+                {isBreakingDown ? "Breaking down..." : "AI Breakdown"}
+              </Button>
+            </div>
           </div>
 
           <div className="space-y-4">
