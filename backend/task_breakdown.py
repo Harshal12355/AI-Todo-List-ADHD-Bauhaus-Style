@@ -29,8 +29,8 @@ class TaskBreakdownService:
         self.ollama_available = self._check_ollama_available()
         if self.ollama_available:
             try:
-                self.ollama_model = Ollama(model="gemma:1b")
-                print("Successfully connected to Ollama with model gemma:1b")
+                self.ollama_model = Ollama(model="gemma3:1b")
+                print("Successfully connected to Ollama with model gemma3:1b")
             except Exception as e:
                 print(f"Error initializing Ollama model: {e}")
                 self.ollama_available = False
@@ -95,7 +95,7 @@ class TaskBreakdownService:
             response = requests.post(
                 "http://localhost:11434/api/generate",
                 json={
-                    "model": "gemma:4b",
+                    "model": "gemma3:1b",
                     "prompt": f"""Break down this task into ADHD-friendly subtasks: {task_title}
                     Each subtask should have:
                     - title: A clear, concise title
