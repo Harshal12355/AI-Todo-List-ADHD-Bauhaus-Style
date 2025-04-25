@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,16 +62,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Bauhaus design system colors
 				bauhaus: {
 					red: "#ea384c",
 					blue: "#1EAEDB",
 					yellow: "#F7DF1E",
 					black: "#1A1F2C",
 					white: "#FFFFFF",
-					background: "#F1F1F1",
-					gray: "#8E9196"
-				},
+					background: "#F2E2C4"
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
