@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="#f5f5f5" />
+  
+  <!-- Main composition with Bauhaus-inspired geometric shapes -->
+  <g>
+    <!-- Quarter circles in Bauhaus primary colors -->
+    <path d="M0,0 L250,0 A250,250 0 0,1 0,250 Z" fill="#E53935" />
+    <path d="M500,0 L500,250 A250,250 0 0,1 250,0 Z" fill="#1E88E5" />
+    <path d="M500,500 L250,500 A250,250 0 0,1 500,250 Z" fill="#FDD835" />
+    <path d="M0,500 L0,250 A250,250 0 0,1 250,500 Z" fill="#000000" />
+    
+    <!-- Central white space for task elements -->
+    <circle cx="250" cy="250" r="150" fill="white" />
+    
+    <!-- Task elements in the center -->
+    <g transform="translate(250,250)">
+      <!-- Task circles -->
+      <circle cx="-60" cy="-60" r="20" fill="#E53935" />
+      <circle cx="60" cy="-60" r="20" fill="#1E88E5" />
+      <circle cx="60" cy="60" r="20" fill="#FDD835" />
+      <circle cx="-60" cy="60" r="20" fill="#000000" />
+      
+      <!-- Connecting lines -->
+      <line x1="-60" y1="-60" x2="60" y2="-60" stroke="#000000" stroke-width="4" />
+      <line x1="60" y1="-60" x2="60" y2="60" stroke="#000000" stroke-width="4" />
+      <line x1="60" y1="60" x2="-60" y2="60" stroke="#000000" stroke-width="4" />
+      <line x1="-60" y1="60" x2="-60" y2="-60" stroke="#000000" stroke-width="4" />
+      
+      <!-- Task checkmarks -->
+      <path d="M-65,-60 L-60,-55 L-50,-65" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <path d="M55,-65 L55,-55 L65,-55" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <path d="M65,60 L55,60 L55,70" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <path d="M-55,65 L-55,55 L-65,55" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    </g>
+    
+    <!-- Decorative Bauhaus-style grid lines -->
+    <g stroke="#000000" stroke-width="3">
+      <line x1="125" y1="375" x2="375" y2="375" />
+      <line x1="375" y1="125" x2="375" y2="375" />
+    </g>
+    
+    <!-- Decorative horizontal bars in Bauhaus style -->
+    <g>
+      <rect x="125" y="400" width="250" height="10" fill="#000000" />
+      <rect x="125" y="420" width="250" height="6" fill="#000000" />
+      <rect x="125" y="436" width="250" height="4" fill="#000000" />
+    </g>
+  </g>
+</svg>

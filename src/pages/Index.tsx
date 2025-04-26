@@ -1,136 +1,154 @@
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import MainLayout from "@/components/layouts/MainLayout";
+import BauhausButton from "@/components/ui/bauhaus-button";
+import BauhausPattern from "@/components/ui/bauhaus-patterns";
 
 const Index = () => {
+  const location = useLocation();
+  
+  // Function to check if the link is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
-    <MainLayout>
-      {/* Hero Section */}
-      <section className="bauhaus-container relative overflow-hidden">
-        {/* Bauhaus decorative elements */}
-        <div className="bauhaus-circle bg-bauhaus-yellow w-32 h-32 -top-10 -right-10 z-0"></div>
-        <div className="bauhaus-square bg-bauhaus-blue w-40 h-40 -bottom-20 -left-20 z-0"></div>
-        
-        <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <h1 className="bauhaus-header">
-                <span className="text-bauhaus-red">Organize</span> your tasks.<br />
-                <span className="text-bauhaus-blue">Focus</span> your time.
-              </h1>
-              <p className="bauhaus-subheader mt-6 text-bauhaus-gray">
-                A Bauhaus-inspired task management system designed to improve your productivity and bring clarity to your workflow.
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link to="/login">
-                  <Button className="bauhaus-btn bauhaus-btn-primary">
-                    Get Started
-                  </Button>
-                </Link>
-                <Link to="#features">
-                  <Button variant="outline" className="bauhaus-btn border-2 border-bauhaus-black">
-                    Learn More
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="hidden lg:block">
-              <div className="relative">
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-bauhaus-red"></div>
-                <div className="relative z-10 border-4 border-bauhaus-black p-4 bg-white">
-                  <img src="/placeholder.svg" alt="Task Management" className="w-full h-auto" />
-                </div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-bauhaus-blue"></div>
-              </div>
+    <div className="min-h-screen w-full bg-white overflow-hidden relative">
+      {/* Bauhaus background pattern */}
+      <BauhausPattern variant="background" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Navigation */}
+        <div className="flex items-center justify-between py-8">
+          <div className="h-12 w-12 flex-shrink-0">
+            <div className="grid grid-cols-2 grid-rows-2 h-full w-full">
+              <div className="bg-bauhaus-black"></div>
+              <div className="bg-bauhaus-blue"></div>
+              <div className="bg-bauhaus-yellow"></div>
+              <div className="bg-bauhaus-red"></div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="bauhaus-container bg-white">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bauhaus-card group hover:border-bauhaus-red">
-              <div className="w-12 h-12 bg-bauhaus-red mb-4 flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Task Management</h3>
-              <p className="text-bauhaus-gray">Create tasks, add subtasks, set priorities, and organize your workflow with our intuitive task management system.</p>
-            </div>
-            
-            <div className="bauhaus-card group hover:border-bauhaus-blue">
-              <div className="w-12 h-12 bg-bauhaus-blue mb-4 flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Pomodoro Timer</h3>
-              <p className="text-bauhaus-gray">Boost your productivity with our customizable Pomodoro timer. Focus for set periods and take structured breaks.</p>
-            </div>
-            
-            <div className="bauhaus-card group hover:border-bauhaus-yellow">
-              <div className="w-12 h-12 bg-bauhaus-yellow mb-4 flex items-center justify-center">
-                <svg className="w-6 h-6 text-bauhaus-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Progress Tracking</h3>
-              <p className="text-bauhaus-gray">Track your progress over time with visual statistics and reports on your productivity and completed tasks.</p>
-            </div>
+          
+          <div className="bg-white border-2 border-bauhaus-black rounded-full py-1 px-2 flex items-center">
+            <Link 
+              to="/" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/tasks" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/tasks') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
+              Tasks
+            </Link>
+            <Link 
+              to="/timer" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/timer') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
+              Timer
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="bauhaus-container bg-bauhaus-background">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-bauhaus-red text-white flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold">1</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Create Tasks</h3>
-              <p className="text-bauhaus-gray">Add your tasks and break them down into manageable subtasks.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-bauhaus-blue text-white flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold">2</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Set Timer</h3>
-              <p className="text-bauhaus-gray">Use the Pomodoro timer to focus on one task at a time.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-bauhaus-yellow text-bauhaus-black flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold">3</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Track Progress</h3>
-              <p className="text-bauhaus-gray">Monitor your productivity and celebrate your achievements.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bauhaus-container bg-bauhaus-black text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to boost your productivity?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Join thousands of users who have transformed their workflow with TaskFlow.</p>
+          
           <Link to="/login">
-            <Button className="bauhaus-btn bauhaus-btn-primary">
-              Start For Free
-            </Button>
+            <BauhausButton variant="secondary" className="px-6">
+              LOGIN
+            </BauhausButton>
           </Link>
         </div>
-      </section>
-    </MainLayout>
+        
+        <div className="flex flex-col md:flex-row py-16 md:py-24 items-center">
+          {/* Left content */}
+          <div className="md:w-1/2 mb-12 md:mb-0">
+            <div className="text-blue-600 uppercase tracking-wide font-bold mb-4">
+              MEET A NEW TASK MANAGEMENT APP
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+              Bauhaus
+            </h1>
+            
+            <p className="text-lg text-bauhaus-black mb-8 max-w-xl">
+              Discover how the Avant-Garde Movement Transformed Task Management in a new platform!
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/login">
+                <BauhausButton variant="primary">
+                  Get Started
+                </BauhausButton>
+              </Link>
+              
+              <Link to="/tasks">
+                <BauhausButton variant="outline">
+                  View Demo
+                </BauhausButton>
+              </Link>
+            </div>
+          </div>
+          
+          {/* Right side - feature highlights */}
+          <div className="md:w-1/2 md:pl-16">
+            <div className="relative">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-16 h-16 bg-bauhaus-yellow -z-10"></div>
+              <div className="absolute bottom-0 left-0 w-16 h-16 bg-bauhaus-blue -z-10"></div>
+              
+              {/* Features list */}
+              <div className="bg-white border-2 border-bauhaus-black p-8 rounded-2xl">
+                <h3 className="text-xl font-bold mb-6">Key Features</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-bauhaus-red flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold">1</span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Beautiful Task Management</h4>
+                      <p className="text-bauhaus-gray">Manage your tasks with a visually stunning interface</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-bauhaus-blue flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Pomodoro Timer</h4>
+                      <p className="text-bauhaus-gray">Stay focused with our elegant Bauhaus-inspired timer</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-bauhaus-yellow flex items-center justify-center flex-shrink-0">
+                      <span className="text-bauhaus-black font-bold">3</span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold">AI Task Breakdown</h4>
+                      <p className="text-bauhaus-gray">Let AI break down complex tasks into manageable subtasks</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Bottom design element */}
+      <div className="absolute bottom-0 left-0 right-0 h-4 bg-bauhaus-black"></div>
+    </div>
   );
 };
 

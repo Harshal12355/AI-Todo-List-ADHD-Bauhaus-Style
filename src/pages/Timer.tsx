@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Pause, Timer as TimerIcon, Check } from "lucide-react";
+import { Play, Pause, Timer as TimerIcon, Check, Settings, X } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
+import BauhausButton from "@/components/ui/bauhaus-button";
+import BauhausCard from "@/components/ui/bauhaus-card";
+import BauhausPattern from "@/components/ui/bauhaus-patterns";
 
 type TimerMode = "focus" | "short-break" | "long-break";
 
@@ -149,114 +151,189 @@ const PomodoroTimer = () => {
     resetTimer();
   };
 
+  // Get colors based on current mode
+  const getModeColors = () => {
+    switch (mode) {
+      case "focus":
+        return {
+          primary: "bg-bauhaus-red",
+          text: "text-bauhaus-red",
+          border: "border-bauhaus-red",
+          accent: "red"
+        };
+      case "short-break":
+        return {
+          primary: "bg-bauhaus-blue",
+          text: "text-bauhaus-blue",
+          border: "border-bauhaus-blue",
+          accent: "blue"
+        };
+      case "long-break":
+        return {
+          primary: "bg-bauhaus-yellow",
+          text: "text-bauhaus-yellow",
+          border: "border-bauhaus-yellow",
+          accent: "yellow"
+        };
+      default:
+        return {
+          primary: "bg-bauhaus-red",
+          text: "text-bauhaus-red",
+          border: "border-bauhaus-red",
+          accent: "red"
+        };
+    }
+  };
+
+  const colors = getModeColors();
+
   return (
     <MainLayout>
-      <div className="bauhaus-container">
-        <div className="container max-w-3xl">
-          <h1 className="bauhaus-header mb-8">Pomodoro Timer</h1>
+      <div className="relative">
+        {/* Bauhaus pattern */}
+        <BauhausPattern variant="background" />
+        
+        <div className="container max-w-5xl py-12 px-4 relative z-10">
+          <div className="mb-2 text-blue-600 uppercase tracking-wide font-bold">
+            PRODUCTIVITY TOOL
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">
+            Pomodoro Timer
+          </h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <Card className="bauhaus-card">
-                <CardHeader className="pb-0">
-                  <CardTitle className="text-center text-xl">
+          <div className="md:flex gap-8 items-start">
+            {/* Timer */}
+            <div className="md:w-1/2 mb-8 md:mb-0">
+              <BauhausCard 
+                color="white" 
+                accent="left" 
+                className={colors.border}
+              >
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold mb-2">
                     {formatModeName(mode)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="flex flex-col items-center">
-                    <div className="relative w-64 h-64 mb-8">
-                      <div className="absolute inset-0 rounded-full border-8 border-bauhaus-background"></div>
-                      
-                      <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-                        <circle
-                          cx="32"
-                          cy="32"
-                          r="28"
-                          fill="none"
-                          stroke={mode === "focus" ? "#ea384c" : mode === "short-break" ? "#1EAEDB" : "#F7DF1E"}
-                          strokeWidth="8"
-                          strokeDasharray={`${2 * Math.PI * 28}`}
-                          strokeDashoffset={`${2 * Math.PI * 28 * (1 - calculateProgress() / 100)}`}
-                          strokeLinecap="round"
-                          style={{ transformOrigin: "center", transform: "scale(4)" }}
-                        />
-                      </svg>
-                      
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-5xl font-bold">{formatTime(timeLeft)}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-4">
-                      <Button
-                        className={`bauhaus-btn ${mode === "focus" ? "bauhaus-btn-primary" : mode === "short-break" ? "bg-bauhaus-blue text-white" : "bg-bauhaus-yellow text-bauhaus-black"}`}
-                        onClick={toggleTimer}
-                      >
-                        {isRunning ? (
-                          <>
-                            <Pause className="mr-2" size={18} /> Pause
-                          </>
-                        ) : (
-                          <>
-                            <Play className="mr-2" size={18} /> Start
-                          </>
-                        )}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="bauhaus-btn border-2"
-                        onClick={resetTimer}
-                      >
-                        Reset
-                      </Button>
-                    </div>
-                    
-                    <div className="flex justify-center mt-8 gap-2">
-                      <Button
-                        variant={mode === "focus" ? "default" : "outline"}
-                        className={`rounded-none ${mode === "focus" ? "bg-bauhaus-red text-white" : "border-bauhaus-red text-bauhaus-red"}`}
-                        onClick={() => setMode("focus")}
-                      >
-                        Focus
-                      </Button>
-                      <Button
-                        variant={mode === "short-break" ? "default" : "outline"}
-                        className={`rounded-none ${mode === "short-break" ? "bg-bauhaus-blue text-white" : "border-bauhaus-blue text-bauhaus-blue"}`}
-                        onClick={() => setMode("short-break")}
-                      >
-                        Short Break
-                      </Button>
-                      <Button
-                        variant={mode === "long-break" ? "default" : "outline"}
-                        className={`rounded-none ${mode === "long-break" ? "bg-bauhaus-yellow text-bauhaus-black" : "border-bauhaus-yellow text-bauhaus-yellow"}`}
-                        onClick={() => setMode("long-break")}
-                      >
-                        Long Break
-                      </Button>
-                    </div>
+                  </h2>
+                  <p className="text-bauhaus-gray">
+                    {mode === "focus" 
+                      ? "Time to concentrate on your task" 
+                      : "Take a moment to refresh your mind"}
+                  </p>
+                </div>
+                
+                <div className="relative w-60 h-60 mx-auto mb-8">
+                  {/* Timer circle background */}
+                  <div className="absolute inset-0 rounded-full border-[16px] border-gray-100"></div>
+                  
+                  {/* Progress circle */}
+                  <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                    <circle
+                      cx="120"
+                      cy="120"
+                      r="102"
+                      strokeWidth="16"
+                      stroke={
+                        mode === "focus" 
+                          ? "#e53935" 
+                          : mode === "short-break" 
+                            ? "#1565c0" 
+                            : "#ffc107"
+                      }
+                      fill="none"
+                      strokeDasharray={2 * Math.PI * 102}
+                      strokeDashoffset={(2 * Math.PI * 102) * (1 - calculateProgress() / 100)}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  
+                  {/* Time display */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-5xl md:text-6xl font-bold">{formatTime(timeLeft)}</span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                
+                <div className="flex justify-center gap-4 mb-8">
+                  <BauhausButton
+                    variant={mode === "focus" ? "secondary" : mode === "short-break" ? "blue" : "yellow"}
+                    onClick={toggleTimer}
+                    className="px-6"
+                  >
+                    {isRunning ? (
+                      <>
+                        <Pause className="mr-2" size={18} /> PAUSE
+                      </>
+                    ) : (
+                      <>
+                        <Play className="mr-2" size={18} /> START
+                      </>
+                    )}
+                  </BauhausButton>
+                  
+                  <BauhausButton
+                    variant="outline"
+                    onClick={resetTimer}
+                    className="px-6"
+                  >
+                    RESET
+                  </BauhausButton>
+                </div>
+                
+                <div className="flex justify-center gap-4 flex-wrap">
+                  <button
+                    onClick={() => setMode("focus")}
+                    className={`py-2 px-6 rounded-full min-w-20 font-medium transition-colors ${
+                      mode === "focus" 
+                      ? "bg-bauhaus-red text-white" 
+                      : "bg-white text-bauhaus-black hover:bg-gray-100"
+                    }`}
+                  >
+                    Focus
+                  </button>
+                  
+                  <button
+                    onClick={() => setMode("short-break")}
+                    className={`py-2 px-6 rounded-full min-w-32 font-medium transition-colors ${
+                      mode === "short-break" 
+                      ? "bg-bauhaus-blue text-white" 
+                      : "border-2 border-bauhaus-blue text-bauhaus-blue hover:bg-blue-50"
+                    }`}
+                  >
+                    Short Break
+                  </button>
+                  
+                  <button
+                    onClick={() => setMode("long-break")}
+                    className={`py-2 px-6 rounded-full min-w-28 font-medium transition-colors ${
+                      mode === "long-break" 
+                      ? "bg-bauhaus-yellow text-bauhaus-black" 
+                      : "border-2 border-bauhaus-yellow text-bauhaus-yellow hover:bg-yellow-50"
+                    }`}
+                  >
+                    Long Break
+                  </button>
+                </div>
+              </BauhausCard>
               
-              <div className="mt-6 text-center">
-                <p className="text-bauhaus-gray">
-                  <TimerIcon className="inline-block mr-2" size={16} />
+              <div className="mt-6 flex justify-center items-center">
+                <TimerIcon className="text-bauhaus-gray mr-2" size={20} />
+                <span className="text-bauhaus-gray font-medium">
                   Sessions completed today: <span className="font-bold">{sessions}</span>
-                </p>
+                </span>
               </div>
             </div>
             
-            <div>
-              <Card className="bauhaus-card">
-                <CardHeader>
-                  <CardTitle>Timer Settings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Focus Duration</span>
-                      <span className="font-bold">{focusMinutes} min</span>
+            {/* Settings */}
+            <div className="md:w-1/2">
+              <BauhausCard color="white" accent="top" className="border-t-bauhaus-black">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold">Timer Settings</h2>
+                  <Settings size={20} className="text-bauhaus-gray" />
+                </div>
+                
+                <div className="space-y-8">
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <label className="font-medium">Focus Duration</label>
+                      <span className="font-bold text-bauhaus-red">{focusMinutes} min</span>
                     </div>
                     <Slider
                       value={[focusMinutes]}
@@ -268,10 +345,10 @@ const PomodoroTimer = () => {
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Short Break Duration</span>
-                      <span className="font-bold">{shortBreakMinutes} min</span>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <label className="font-medium">Short Break Duration</label>
+                      <span className="font-bold text-bauhaus-blue">{shortBreakMinutes} min</span>
                     </div>
                     <Slider
                       value={[shortBreakMinutes]}
@@ -283,10 +360,10 @@ const PomodoroTimer = () => {
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Long Break Duration</span>
-                      <span className="font-bold">{longBreakMinutes} min</span>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <label className="font-medium">Long Break Duration</label>
+                      <span className="font-bold text-bauhaus-yellow">{longBreakMinutes} min</span>
                     </div>
                     <Slider
                       value={[longBreakMinutes]}
@@ -298,21 +375,29 @@ const PomodoroTimer = () => {
                     />
                   </div>
                   
-                  <Button
-                    className="bauhaus-btn w-full bg-bauhaus-black text-white hover:bg-bauhaus-black/90"
+                  <BauhausButton
+                    variant="primary"
+                    className="w-full"
                     onClick={applySettings}
                   >
-                    <Check className="mr-2" size={18} /> Apply Settings
-                  </Button>
-                  
-                  <div className="mt-4 pt-4 border-t border-bauhaus-background">
-                    <h3 className="font-bold mb-2">Pomodoro Technique</h3>
-                    <p className="text-sm text-bauhaus-gray">
-                      The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by 5-minute breaks. After four pomodoros, take a longer break.
-                    </p>
+                    <Check className="mr-2" size={18} /> APPLY SETTINGS
+                  </BauhausButton>
+                </div>
+                
+                <div className="mt-8 pt-8 border-t border-gray-100">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-bauhaus-black flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold">?</span>
+                    </div>
+                    <div>
+                      <h3 className="font-bold mb-2">About the Pomodoro Technique</h3>
+                      <p className="text-bauhaus-gray text-sm">
+                        The Pomodoro Technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for tomato, after the tomato-shaped kitchen timer that inspired the method.
+                      </p>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </BauhausCard>
             </div>
           </div>
         </div>
@@ -322,3 +407,4 @@ const PomodoroTimer = () => {
 };
 
 export default PomodoroTimer;
+
