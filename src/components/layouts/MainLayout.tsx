@@ -1,50 +1,84 @@
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import BauhausButton from "@/components/ui/bauhaus-button";
 
 type MainLayoutProps = {
   children: React.ReactNode;
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const location = useLocation();
+  
+  // Function to check if the link is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b border-bauhaus-black py-4">
-        <div className="container flex justify-between items-center">
+    <div className="min-h-screen flex flex-col bg-white">
+      <header className="py-8 relative z-20">
+        <div className="container mx-auto px-4 flex justify-between items-center">
           <Link to="/" className="font-bold text-xl">
             <div className="flex items-center">
-              <div className="w-6 h-6 bg-bauhaus-red rounded-full mr-2"></div>
-              <span>TaskFlow</span>
+              <div className="h-12 w-12 flex-shrink-0">
+                <div className="grid grid-cols-2 grid-rows-2 h-full w-full">
+                  <div className="bg-bauhaus-black"></div>
+                  <div className="bg-bauhaus-blue"></div>
+                  <div className="bg-bauhaus-yellow"></div>
+                  <div className="bg-bauhaus-red"></div>
+                </div>
+              </div>
             </div>
           </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="font-medium hover:text-bauhaus-blue transition-colors">
+          <div className="bg-white border-2 border-bauhaus-black rounded-full py-1 px-2 flex items-center">
+            <Link 
+              to="/" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
               Home
             </Link>
-            <Link to="/tasks" className="font-medium hover:text-bauhaus-blue transition-colors">
+            <Link 
+              to="/tasks" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/tasks') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
               Tasks
             </Link>
-            <Link to="/timer" className="font-medium hover:text-bauhaus-blue transition-colors">
-              Pomodoro
-            </Link>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link to="/login">
-              <Button className="bauhaus-btn bauhaus-btn-primary">
-                Login
-              </Button>
+            <Link 
+              to="/timer" 
+              className={`font-medium px-6 py-2 rounded-full transition-colors ${
+                isActive('/timer') 
+                  ? 'bg-bauhaus-blue text-white' 
+                  : 'bg-white text-bauhaus-black hover:bg-gray-100'
+              }`}
+            >
+              Timer
             </Link>
           </div>
+          <Link to="/login">
+            <BauhausButton variant="secondary" className="px-6">
+              LOGIN
+            </BauhausButton>
+          </Link>
         </div>
       </header>
+      
       <main className="flex-grow">
         {children}
       </main>
-      <footer className="border-t border-bauhaus-black py-4 bg-bauhaus-background">
-        <div className="container">
+      
+      <footer className="py-8 border-t border-gray-200 bg-white">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">TaskFlow</h3>
+              <h3 className="font-bold text-lg mb-4">Bauhaus</h3>
               <p className="text-bauhaus-gray">A Bauhaus-inspired task management application to help you organize your work and boost your productivity.</p>
             </div>
             <div>
@@ -64,7 +98,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             </div>
           </div>
           <div className="mt-8 text-center text-bauhaus-gray">
-            <p>&copy; {new Date().getFullYear()} TaskFlow. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Bauhaus. All rights reserved.</p>
           </div>
         </div>
       </footer>

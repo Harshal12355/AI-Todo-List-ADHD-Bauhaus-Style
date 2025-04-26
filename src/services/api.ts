@@ -7,7 +7,7 @@ export interface Subtask {
 
 export const breakdownTask = async (taskTitle: string, modelType: "ollama" | "openai" = "ollama"): Promise<Subtask[]> => {
   try {
-    const response = await fetch("http://localhost:8000/api/breakdown-task", {
+    const response = await fetch("http://localhost:5000/api/breakdown-task", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

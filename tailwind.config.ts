@@ -69,12 +69,19 @@ export default {
 					black: "#1A1F2C",
 					white: "#FFFFFF",
 					background: "#F2E2C4"
-				}
+				},
+				'bauhaus-red': '#e53935',
+				'bauhaus-blue': '#1565c0',
+				'bauhaus-yellow': '#ffc107',
+				'bauhaus-black': '#212121',
+				'bauhaus-gray': '#757575',
+				'bauhaus-background': '#f5f5f5',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				'bauhaus': '40px',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -110,7 +117,8 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif']
+				sans: ['Inter', 'sans-serif'],
+				'serif': ['Playfair Display', 'serif'],
 			}
 		}
 	},
