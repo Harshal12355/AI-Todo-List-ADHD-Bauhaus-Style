@@ -11,7 +11,7 @@ const About = () => {
         {/* Bauhaus background pattern */}
         <BauhausPattern variant="background" />
         
-        <div className="container max-w-4xl mx-auto px-4 py-16 relative z-10">
+        <div className="container max-w-4xl mx-auto px-4 py-16 relative z-10 text-center">
           <div className="mb-8">
             <div className="text-blue-600 uppercase tracking-wide font-bold mb-2">
               ABOUT TASKFLOW
@@ -19,15 +19,15 @@ const About = () => {
             <h1 className="text-5xl font-bold mb-6 tracking-tight">
               Reimagining Task Management
             </h1>
-            <p className="text-lg text-bauhaus-gray mb-8 max-w-3xl">
+            <p className="text-lg text-bauhaus-gray mb-8 max-w-3xl mx-auto">
               At Taskflow, we believe that managing your tasks should be both effective and beautiful. 
               Inspired by the Bauhaus design movement, we've created a platform that enhances productivity
               through simplicity, function, and artistic expression.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-            <BauhausCard accent="left" className="border-l-bauhaus-blue">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16 justify-items-center">
+            <BauhausCard accent="left" className="border-l-bauhaus-blue max-w-md">
               <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
               <p className="text-bauhaus-gray mb-4">
                 We're on a mission to transform how people approach productivity by creating tools that
@@ -40,7 +40,7 @@ const About = () => {
               </p>
             </BauhausCard>
             
-            <BauhausCard accent="top" className="border-t-bauhaus-red">
+            <BauhausCard accent="top" className="border-t-bauhaus-red max-w-md">
               <h2 className="text-2xl font-bold mb-4">Enhanced with AI</h2>
               <p className="text-bauhaus-gray mb-4">
                 Taskflow leverages the latest in artificial intelligence to break down complex projects
@@ -54,7 +54,7 @@ const About = () => {
             </BauhausCard>
           </div>
           
-          <div className="bg-white rounded-2xl border-2 border-bauhaus-black p-8 mb-16 relative">
+          <div className="bg-white rounded-2xl border-2 border-bauhaus-black p-8 mb-16 relative max-w-3xl mx-auto">
             {/* Yellow circle */}
             <div className="absolute -top-6 -right-6 w-16 h-16 bg-bauhaus-yellow rounded-full -z-10"></div>
             
@@ -103,7 +103,7 @@ const About = () => {
           </div>
           
           <div className="text-center">
-            <BauhausCard className="p-8 mb-8">
+            <BauhausCard className="p-8 mb-8 max-w-2xl mx-auto">
               <h2 className="text-2xl font-bold mb-4">Ready to transform your workflow?</h2>
               <p className="text-bauhaus-gray mb-8 max-w-2xl mx-auto">
                 Join thousands of professionals who have discovered the perfect balance of 
