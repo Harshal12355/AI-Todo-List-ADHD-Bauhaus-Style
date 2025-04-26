@@ -188,7 +188,7 @@ const PomodoroTimer = () => {
   const colors = getModeColors();
 
   return (
-    <MainLayout>
+    <MainLayout showProtectedLinks={true}>
       <div className="relative">
         {/* Bauhaus pattern */}
         <BauhausPattern variant="background" />

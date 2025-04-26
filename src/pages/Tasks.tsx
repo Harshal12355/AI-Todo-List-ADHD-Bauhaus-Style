@@ -187,7 +187,7 @@ const Tasks = () => {
   const usedTags = getAllUsedTags();
 
   return (
-    <MainLayout>
+    <MainLayout showProtectedLinks={true}>
       <div className="relative">
         {/* Bauhaus design patterns */}
         <BauhausPattern variant="background" />
