@@ -160,22 +160,11 @@ const Tasks = () => {
     } catch (error) {
       console.error("Error breaking down task:", error);
       
-      // Check if it might be an Ollama connection issue
-      if (aiModel === "ollama") {
-        toast({
-          title: "Ollama connection error",
-          description: "Could not connect to Ollama. Make sure Ollama is running and the gemma:1b model is installed, or try using OpenAI instead.",
-          variant: "destructive",
-        });
-        // Suggest switching to OpenAI
-        setAiModel("openai");
-      } else {
-        toast({
-          title: "Error",
-          description: "Failed to break down task. Please try again or check your API key configuration.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Error",
+        description: "Failed to break down task. Please try again or check your API key configuration.",
+        variant: "destructive",
+      });
     } finally {
       setIsBreakingDown(false);
     }
@@ -257,19 +246,6 @@ const Tasks = () => {
             </div>
             
             <div className="flex gap-2">
-              <Select
-                value={aiModel}
-                onValueChange={(value: "ollama" | "openai") => setAiModel(value)}
-              >
-                <SelectTrigger className="w-[120px] rounded-full border-2 border-bauhaus-black bg-white">
-                  <SelectValue placeholder="Model" />
-                </SelectTrigger>
-                <SelectContent className="rounded-xl border-2 border-bauhaus-black bg-white">
-                  <SelectItem value="ollama">Ollama</SelectItem>
-                  <SelectItem value="openai">OpenAI</SelectItem>
-                </SelectContent>
-              </Select>
-              
               <BauhausButton
                 onClick={addTask}
                 variant="primary"

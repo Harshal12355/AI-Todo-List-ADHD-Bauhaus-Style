@@ -77,15 +77,7 @@ const Login = () => {
                   </svg>
                   {isSubmitting ? "SIGNING IN..." : "CONTINUE WITH GOOGLE"}
                 </button>
-                
-                {/* <div className="text-center pt-4">
-                  <span className="text-sm text-gray-500">
-                    Don't have an account?{" "}
-                    <Link to="#" className="text-bauhaus-blue hover:underline font-medium">
-                      Sign up
-                    </Link>
-                  </span>
-                </div> */}
+
               </form>
             </div>
             
