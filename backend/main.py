@@ -44,5 +44,8 @@ async def breakdown_task(task_request: TaskRequest):
         print(f"Error in breakdown_task: {str(e)}")  # Add logging
         raise HTTPException(status_code=500, detail=str(e))
 
+# Vercel serverless function handler
+handler = app
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000) 
